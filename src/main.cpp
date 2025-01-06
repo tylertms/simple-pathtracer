@@ -1,16 +1,4 @@
-#include <math.h>
-
-#include <fstream>
-#include <iostream>
-using namespace std;
-
-#define FILE_NAME_LENGTH 32
-
-#define IMG_WIDTH 1024
-#define IMG_HEIGHT 1024
-
-#include "color.hpp"
-#include "ray.hpp"
+#include "config.hpp"
 #include "sphere.hpp"
 #include "scene.hpp"
 

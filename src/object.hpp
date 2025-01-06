@@ -1,8 +1,6 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
-#include "ray.hpp"
-
 constexpr double min_ray_time = 1e-6;
 constexpr double max_ray_time = 1e+6;
 

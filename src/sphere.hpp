@@ -2,7 +2,6 @@
 #define SPHERE_HPP
 
 #include "object.hpp"
-#include "vec3.hpp"
 
 class sphere : public object {
  private:

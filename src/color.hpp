@@ -1,8 +1,9 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
-#include <iostream>
+#include "config.hpp"
 #include "vec3.hpp"
+#include <math.h>
 
 using namespace std;
 typedef vec3 color;

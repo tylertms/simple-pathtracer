@@ -1,14 +1,7 @@
 #ifndef SCENE_HPP
 #define SCENE_HPP
 
-#include "object.hpp"
-
-#include <memory>
 #include <vector>
-#include <stdlib.h>
-
-using std::make_shared;
-using std::shared_ptr;
 
 class scene : public object {
   public:
