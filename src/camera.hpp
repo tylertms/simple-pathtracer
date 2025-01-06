@@ -6,18 +6,20 @@
 
 class camera {
  public:
+  int image_width = 1024;
+  double aspect_ratio = 16.0 / 10.0;
   double focal_length = 1.0;
 
   void render(const object& scn, std::ostream& image) {
     init(image);
 
-    for (int y = 0; y < IMG_HEIGHT; y++) {
-      clog << "\r" << y << " / " << IMG_HEIGHT << " lines rendered." << flush;
+    for (int y = 0; y < image_height; y++) {
+      clog << "\r" << y << " / " << image_height << " lines rendered." << flush;
 
-      for (int x = 0; x < IMG_WIDTH; x++) {
+      for (int x = 0; x < image_width; x++) {
         // get ray from camera to point
-        point3 pixel_point = vec3((double)(2 * x - IMG_WIDTH) / min_dir,
-                                  (double)(2 * y - IMG_HEIGHT) / min_dir, -focal_length);
+        point3 pixel_point = vec3((double)(2 * x - image_width) / min_view_len,
+                                  (double)(2 * y - image_height) / -min_view_len, -focal_length);
         vec3 ray_direction = camera_origin - pixel_point;
         ray r(pixel_point, ray_direction);
 
@@ -29,14 +31,18 @@ class camera {
   }
 
  private:
-  point3 camera_origin = vec3(0, 0, 0);
-
-  int min_dir = -min(IMG_HEIGHT, IMG_WIDTH);
+  int image_height;
+  int min_view_len;
+  point3 camera_origin;
 
   void init(std::ostream& image) {
+    image_height = int(image_width / aspect_ratio);
+    min_view_len = min(image_width, image_height);
+    camera_origin = vec3(0, 0, 0);
+
     // write .ppm image header
     image << "P6\n";
-    image << IMG_WIDTH << " " << IMG_HEIGHT << "\n";
+    image << image_width << " " << image_height << "\n";
     image << UINT8_MAX << "\n";
   }
 
@@ -44,7 +50,7 @@ class camera {
     // check for intersections
     hit h;
     if (scn.intersection(r, range(0, infinity), h)) {
-      return 0.5 * (-h.normal + color(1, 1, 1));
+      return 0.5 * (h.normal + color(1, 1, 1));
     }
     // otherwise, get a sky color for that direction
     vec3 unit_dir = normalize(r.direction());
