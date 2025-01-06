@@ -1,5 +1,5 @@
 #!/bin/bash
 
-meson compile -C build
+ninja -C build
 ./build/pathtracer
 open image.ppm
