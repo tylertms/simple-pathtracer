@@ -8,7 +8,7 @@ using std::shared_ptr;
 color ray_color(ray& r, const scene& scn) {
   // check for intersections
   hit h;
-  if (scn.intersection(r, 0, std::numeric_limits<double>::infinity(), h)) {
+  if (scn.intersection(r, range(0, infinity), h)) {
     return 0.5 * (h.normal + color(1, 1, 1));
   }
   // otherwise, get a sky color for that direction

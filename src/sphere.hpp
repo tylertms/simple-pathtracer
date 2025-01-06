@@ -12,7 +12,7 @@ class sphere : public object {
   sphere(const point3& center, double radius)
       : center(center), radius(radius) {}
 
-  bool intersection(const ray& r, double min_t, double max_t, hit& h) const override {
+  bool intersection(const ray& r, range t_limit, hit& h) const override {
     vec3 offset = center - r.origin();
 
     // simplified quadratic formula
@@ -28,9 +28,9 @@ class sphere : public object {
 
     double sd = sqrt(discriminant);
     double root = (b - sd) / a;
-    if (root <= min_t || max_t <= root) {
+    if (!t_limit.contains_exclusive(root)) {
       root = (b + sd) / a;
-      if (root <= min_t || max_t <= root)
+      if (!t_limit.contains_exclusive(root))
         return false;
     }
 

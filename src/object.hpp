@@ -1,9 +1,6 @@
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
-constexpr double min_ray_time = 1e-6;
-constexpr double max_ray_time = 1e+6;
-
 class hit {
  public:
   point3 point;
@@ -20,7 +17,7 @@ class hit {
 class object {
  public:
   virtual ~object() = default;
-  virtual bool intersection(const ray& r, double min_t, double max_t, hit& h) const = 0;
+  virtual bool intersection(const ray& r, range t_limit, hit& h) const = 0;
 };
 
 #endif

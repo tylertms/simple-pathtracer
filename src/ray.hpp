@@ -1,8 +1,6 @@
 #ifndef RAY_HPP
 #define RAY_HPP
 
-#include "vec3.hpp"
-
 class ray {
   private:
     point3 org;

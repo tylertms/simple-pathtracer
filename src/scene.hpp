@@ -16,13 +16,13 @@ class scene : public object {
     objects.push_back(obj);
   }
 
-  bool intersection(const ray& r, double min_t, double max_t, hit& h) const override {
+  bool intersection(const ray& r, range t_limit, hit& h) const override {
     hit temp_hit;
     bool did_hit = false;
-    double closest_time = max_t;
+    double closest_time = t_limit.max;
 
     for (const auto& obj : objects) {
-      if (obj->intersection(r, min_t, closest_time, temp_hit)) {
+      if (obj->intersection(r, range(t_limit.min, closest_time), temp_hit)) {
         did_hit = true;
         closest_time = temp_hit.time;
         h = temp_hit;
