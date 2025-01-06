@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 
   // scene setup
   scene scn;
-  scn.add(make_shared<sphere>(point3(0, 0, 1.5), 0.5));
+  scn.add(make_shared<sphere>(point3(0, 0, 1), 0.5));
   scn.add(make_shared<sphere>(point3(0,100.5,10), 100));
 
   camera cam;

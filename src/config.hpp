@@ -12,9 +12,6 @@ using std::shared_ptr;
 
 #define FILE_NAME_LENGTH 32
 
-#define IMG_WIDTH 1024
-#define IMG_HEIGHT 1024
-
 const double infinity = std::numeric_limits<double>::infinity();
 const double PI = M_PI;
 

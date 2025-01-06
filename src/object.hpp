@@ -9,7 +9,7 @@ class hit {
   bool is_front;
 
   void set_face_normal(const ray& r, const vec3& outward_normal) {
-    is_front = dot(r.direction(), outward_normal) < 0;
+    is_front = dot(r.direction(), outward_normal) >= 0;
     normal = is_front ? outward_normal : -outward_normal;
   }
 };
