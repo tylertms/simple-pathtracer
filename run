@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# if no build directory exists,
+# make one and configure it
+if !(test -d build); then
+  meson setup build
+fi
+
+# use ninja to build
 ninja -C build
+
+# run the pathtracer itself
 ./build/pathtracer
+
+# open the image output
 open image.ppm
