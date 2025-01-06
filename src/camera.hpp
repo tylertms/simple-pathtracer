@@ -44,7 +44,7 @@ class camera {
     // check for intersections
     hit h;
     if (scn.intersection(r, range(0, infinity), h)) {
-      return 0.5 * (h.normal + color(1, 1, 1));
+      return 0.5 * (-h.normal + color(1, 1, 1));
     }
     // otherwise, get a sky color for that direction
     vec3 unit_dir = normalize(r.direction());
