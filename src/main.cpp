@@ -1,37 +1,44 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 using namespace std;
 
-#define FILE_NAME_LENGTH  32
+#define FILE_NAME_LENGTH 32
 
-#define IMG_WIDTH  1024
+#define IMG_WIDTH 1024
 #define IMG_HEIGHT 1024
+
+#include "color.hpp"
 
 int main(int argc, char* argv[]) {
   // set up file name
-  char fileName[FILE_NAME_LENGTH] = "image.ppm";
+  char file_name[FILE_NAME_LENGTH] = "image.ppm";
   if (argc > 1) {
-    strncpy(fileName, argv[1], FILE_NAME_LENGTH);
-    fileName[FILE_NAME_LENGTH - 1] = '\0';
+    strncpy(file_name, argv[1], FILE_NAME_LENGTH);
+    file_name[FILE_NAME_LENGTH - 1] = '\0';
   }
 
   // create and open image file
-  ofstream image(fileName);
+  ofstream image(file_name);
   if (!image.is_open()) {
-    printf("Error creating file: %s\n", fileName);
+    printf("Error creating file: %s\n", file_name);
     return -1;
   }
 
   // write .ppm image header
-  image << "P6\n" << IMG_WIDTH << " " << IMG_HEIGHT << "\n255\n";
+  image << "P6\n";
+  image << IMG_WIDTH <<  " " << IMG_HEIGHT << "\n";
+  image << UINT8_MAX << "\n";
 
   for (int y = 0; y < IMG_HEIGHT; y++) {
+    clog << "\r" << y << " / " << IMG_HEIGHT << " lines rendered." << flush;
+
     for (int x = 0; x < IMG_WIDTH; x++) {
-      image << (unsigned char)((float)x * 255.99 / IMG_WIDTH);
-      image << (unsigned char)((float)y * 255.99 / IMG_HEIGHT);
-      image << '\0';
+      auto pixel_color = color((double)x / IMG_WIDTH, (double)y / IMG_HEIGHT, 0);
+      write_color(image, pixel_color);
     }
   }
+
+  std::clog << "\rSuccessfully rendered image: " << file_name << "\n";
 
   // close out the image
   image.close();
