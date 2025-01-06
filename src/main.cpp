@@ -8,6 +8,13 @@ using namespace std;
 #define IMG_HEIGHT 1024
 
 #include "color.hpp"
+#include "ray.hpp"
+
+color ray_color(ray& r) {
+  vec3 unit_dir = normalized(r.direction());
+  double a = (unit_dir.y() + 1.0) * 0.5;
+  return (a)*color(1.0, 1.0, 1.0) + (1-a)*color(0.5, 0.7, 1.0);
+}
 
 int main(int argc, char* argv[]) {
   // set up file name
@@ -29,11 +36,21 @@ int main(int argc, char* argv[]) {
   image << IMG_WIDTH <<  " " << IMG_HEIGHT << "\n";
   image << UINT8_MAX << "\n";
 
+  // camera info
+  double focal_length = 2.0;
+  point3 camera_origin =  vec3(0, 0, -focal_length);
+
+
   for (int y = 0; y < IMG_HEIGHT; y++) {
     clog << "\r" << y << " / " << IMG_HEIGHT << " lines rendered." << flush;
 
     for (int x = 0; x < IMG_WIDTH; x++) {
-      auto pixel_color = color((double)x / IMG_WIDTH, (double)y / IMG_HEIGHT, 0);
+      // get ray from camera to point
+      point3 pixel_point = vec3((double)(2 * x - IMG_WIDTH) / IMG_WIDTH, (double)(2 * y - IMG_HEIGHT) / IMG_HEIGHT, 0);
+      vec3 ray_direction = pixel_point - camera_origin;
+      ray r(camera_origin, ray_direction);
+      
+      color pixel_color = ray_color(r);
       write_color(image, pixel_color);
     }
   }
