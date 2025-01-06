@@ -84,7 +84,7 @@ inline vec3 cross(const vec3& a, const vec3& b) {
               a.n[0] * b.n[1] - a.n[1] * b.n[0]);
 }
 
-inline vec3 normalized(const vec3& v) {
+inline vec3 normalize(const vec3& v) {
   return v / v.length();
 }
 
